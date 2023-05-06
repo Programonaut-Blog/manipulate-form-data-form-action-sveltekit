@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { enhance } from '$app/forms';
     export let data;
 </script>
 
@@ -9,7 +10,9 @@
 <section class="container">
     <h1>Edit {data.donut.name}</h1>
 
-    <form method="POST" action="?/update">
+    <form method="POST" action="?/update" use:enhance={({data: formData}) => {
+        formData.append('id', data.donut.id);
+    }}>
         <label for="name">Name</label>
         <input type="text" name="name" id="name" value="{data.donut.name}">
 

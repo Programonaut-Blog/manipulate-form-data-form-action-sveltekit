@@ -8,6 +8,7 @@ export const actions: Actions = {
         
         // save the data to the database e.g. with pocketbase
         // const record = await pb.collection('donuts').update(data.get('id'), data);
+        return { name: data.get('name') }
     }
 };
 

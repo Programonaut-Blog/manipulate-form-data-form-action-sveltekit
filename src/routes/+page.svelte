@@ -1,6 +1,8 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
     export let data;
+    export let action: undefined | { success: boolean, name: string};
+    let closed = false;
 </script>
 
 <svelte:head>
@@ -12,6 +14,10 @@
 
     <form method="POST" action="?/update" use:enhance={({data: formData}) => {
         formData.append('id', data.donut.id);
+
+        return async ({result}) => {
+            action = { success: result.status === 200, name: result.data.name };
+        };
     }}>
         <label for="name">Name</label>
         <input type="text" name="name" id="name" value="{data.donut.name}">
@@ -24,4 +30,16 @@
 
         <button type="submit">Save</button>
     </form>
+
+    <dialog open={action?.success && !closed}>
+        <article>
+          <header>
+            <a href="#close" aria-label="Close" class="close" on:click={() => closed = true}></a>
+            Success
+          </header>
+          <p>
+            Donut with name "{action?.name}" successfully updated!
+          </p>
+        </article>
+    </dialog>
 </section>

@@ -1,6 +1,9 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
+    import type { ActionData } from './$types.js';
     export let data;
+    export let form: ActionData;
+    export let closed = false;
 </script>
 
 <svelte:head>
@@ -24,4 +27,16 @@
 
         <button type="submit">Save</button>
     </form>
+
+    <dialog open={form?.success && !closed}>
+        <article>
+          <header>
+            <a href="#close" aria-label="Close" class="close" on:click={() => closed = true}></a>
+            Success
+          </header>
+          <p>
+            Donut with name "{form?.name}" successfully updated!
+          </p>
+        </article>
+    </dialog>
 </section>
